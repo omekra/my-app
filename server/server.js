@@ -9,14 +9,11 @@ app.use(express.json());
 
 const port = process.env.PORT || 5001;
 
-app.use((req, res, next) => {
-  console.log(req.path, req.method);
-  next();
-});
+app.use(express.json());
+app.use(express.urlencoded({ extended: false }));
 
 // routes
-app.use("/api/user", userRoutes);
-// app.use("/", (req, res) => res.send("Hello"));
+app.use("/api/auth", userRoutes);
 
 mongoose
   .connect(process.env.MONGO_URI)
@@ -27,4 +24,5 @@ mongoose
   })
   .catch((err) => {
     console.log(err);
+    process.exit(1);
   });
